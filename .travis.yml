@@ -4,7 +4,7 @@ go:
   - '1.12.x'
 
 env:
-  - GO111MODULE=on
+  - GO111MODULE=off
 
 stages:
   - name: test
