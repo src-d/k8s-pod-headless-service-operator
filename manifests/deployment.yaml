@@ -1,0 +1,28 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: k8s-pod-headless-service-operator
+  namespace: kube-system
+  labels:
+    k8s-app: k8s-pod-headless-service-operator
+    name: k8s-pod-headless-service-operator
+spec:
+  selector:
+    matchLabels:
+      name: k8s-pod-headless-service-operator
+  template:
+    metadata:
+      labels:
+        k8s-app: k8s-pod-headless-service-operator
+        name: k8s-pod-headless-service-operator
+    spec:
+      serviceAccountName: k8s-pod-headless-service-operator
+      restartPolicy: Always
+      containers:
+        - image: srcd/k8s-pod-headless-service-operator
+          imagePullPolicy: Always
+          name: k8s-pod-headless-service-operator
+          env:
+            - name: NAMESPACE
+              value: default
