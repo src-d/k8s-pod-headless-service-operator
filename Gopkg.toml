@@ -34,16 +34,12 @@
   name = "gopkg.in/src-d/go-cli.v0"
 
 [[constraint]]
-  branch = "release-1.14"
-  name = "k8s.io/api"
-
-[[constraint]]
-  branch = "master"
+  branch = "release-1.13"
   name = "k8s.io/apimachinery"
 
 [[constraint]]
   name = "k8s.io/client-go"
-  version = "11.0.0"
+  version = "10.0.0"
 
 [prune]
   go-tests = true
