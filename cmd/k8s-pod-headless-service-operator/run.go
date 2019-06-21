@@ -133,24 +133,36 @@ func (r *RunCommand) updateService(pod *core_v1.Pod) error {
 		return r.setUpService(pod)
 	}
 
-	// update the pod IP
-	_, err = client.CoreV1().Endpoints(pod.GetNamespace()).Update(&core_v1.Endpoints{
-		ObjectMeta: meta_v1.ObjectMeta{
-			Name:        pod.GetObjectMeta().GetName(),
-			Annotations: pod.GetAnnotations(),
-		},
-		Subsets: []core_v1.EndpointSubset{
-			core_v1.EndpointSubset{
-				Addresses: []core_v1.EndpointAddress{
-					core_v1.EndpointAddress{
-						IP: pod.Status.PodIP,
+	endpoint, err := client.CoreV1().Endpoints(pod.GetNamespace()).Get(pod.GetName(), meta_v1.GetOptions{})
+	if err != nil {
+		return err
+	}
+
+	if len(endpoint.Subsets) == 0 || len(endpoint.Subsets[0].Addresses) == 0 || endpoint.Subsets[0].Addresses[0].IP != pod.Status.PodIP {
+		log.Infof("%s has a new Pod IP, updating it", pod.ObjectMeta.Name)
+		// update the pod IP
+		_, err = client.CoreV1().Endpoints(pod.GetNamespace()).Update(&core_v1.Endpoints{
+			ObjectMeta: meta_v1.ObjectMeta{
+				Name:        pod.GetObjectMeta().GetName(),
+				Annotations: pod.GetAnnotations(),
+			},
+			Subsets: []core_v1.EndpointSubset{
+				core_v1.EndpointSubset{
+					Addresses: []core_v1.EndpointAddress{
+						core_v1.EndpointAddress{
+							IP: pod.Status.PodIP,
+						},
 					},
 				},
 			},
-		},
-	})
+		})
 
-	return err
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
 }
 
 func (r *RunCommand) setUpService(pod *core_v1.Pod) error {
