@@ -172,6 +172,11 @@ func (r *RunCommand) setUpService(pod *core_v1.Pod) error {
 		return nil
 	}
 
+	if len(pod.GetName()) > 63 {
+		log.Infof("%s has a too long Pod name to create a service", pod.ObjectMeta.Name)
+		return nil
+	}
+
 	if pod.Status.PodIP == "" {
 		log.Infof("%s doesn't have an IP yet skipping", pod.ObjectMeta.Name)
 		return nil
