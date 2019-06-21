@@ -3,7 +3,7 @@ This is a Kubernetes operator that watches Pods with the annotation `srcd.host/c
 
 # Installation
 
-This tool is made to run in cluster as a Deployment. For testing purposes it can also run locally with a connection to a Kubernetes cluster, however this is of no use since it can not create the directory on the server.
+This tool is made to run in cluster as a Deployment. For testing purposes it can also run locally with a connection to a Kubernetes cluster.
 
 ## Kubernetes manifests
 This repository provides example manifests file you can use to deploy this. These contain a service account and RBAC configuration for the tool to be able to read Pods and read/write Services. As well as a Deployment to deploy the operator in a cluster.
