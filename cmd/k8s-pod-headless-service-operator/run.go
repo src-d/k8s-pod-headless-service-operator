@@ -206,7 +206,7 @@ func (r *RunCommand) setUpService(pod *core_v1.Pod) error {
 		return err
 	}
 
-	// endpoints is needed as a Service selector will select all replicas in a replicaset
+	// service label selectors are unable to single out a a pod so an endpoint is created so we have an A record created by the DNS system
 	_, err = client.CoreV1().Endpoints(pod.GetNamespace()).Create(&core_v1.Endpoints{
 		ObjectMeta: meta_v1.ObjectMeta{
 			Name:        pod.GetObjectMeta().GetName(),
