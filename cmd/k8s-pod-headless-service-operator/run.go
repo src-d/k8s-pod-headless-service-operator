@@ -243,10 +243,5 @@ func (r *RunCommand) deleteService(pod *core_v1.Pod) error {
 		return err
 	}
 
-	err = client.CoreV1().Services(pod.GetNamespace()).Delete(pod.GetName(), &meta_v1.DeleteOptions{})
-	if err != nil {
-		return err
-	}
-
-	return client.CoreV1().Endpoints(pod.GetNamespace()).Delete(pod.GetName(), &meta_v1.DeleteOptions{})
+	return client.CoreV1().Services(pod.GetNamespace()).Delete(pod.GetName(), &meta_v1.DeleteOptions{})
 }
