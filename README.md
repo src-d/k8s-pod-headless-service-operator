@@ -20,7 +20,7 @@ This repository provides example manifests file you can use to deploy this. Thes
 We also provide a Helm chart in our [Charts repository](https://github.com/src-d/charts). 
 ```bash
 ~ $ helm repo add srcd-infra https://src-d.github.io/charts/infra/
-~ $ helm install k8s-pod-headless-service-operator --set image.tag=v1.0.0
+~ $ helm install k8s-pod-headless-service-operator --set image.tag=v0.1.1
 ```
 
 # Configuration
